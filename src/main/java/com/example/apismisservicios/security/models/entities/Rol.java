@@ -1,34 +1,46 @@
 package com.example.apismisservicios.security.models.entities;
 
+import com.example.apismisservicios.security.enums.RolNombre;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
 public class Rol implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
-    @Column(unique = true, length = 20)
-    private String nombre;
+    @NotNull
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private RolNombre rolNombre;
 
-    public Long getId() {
+    public Rol() {
+    }
+
+    public Rol(RolNombre rolNombre) {
+        this.rolNombre = rolNombre;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public RolNombre getRolNombre() {
+        return rolNombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRolNombre(RolNombre rolNombre) {
+        this.rolNombre = rolNombre;
     }
-
-    private static final long serialVersionUID = 1L;
-
 }

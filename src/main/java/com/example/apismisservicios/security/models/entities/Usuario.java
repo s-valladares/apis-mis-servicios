@@ -1,43 +1,77 @@
 package com.example.apismisservicios.security.models.entities;
 
+
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
-    @Column(unique = true, length = 20)
-    private String username;
+    @NotNull
+    @Column(length = 20)
+    private String nombreUsuario;
+
+    @Column(unique = true)
+    private String email;
+
+    @NotNull
     @Column(length = 60)
     private String password;
+
     private Boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"),
-    inverseJoinColumns = @JoinColumn(name = "rol_id"),
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "rol_id"})})
-    private List<Rol> roles;
+    @NotNull
+    @JoinTable(
+            name = "usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles = new HashSet<>();
 
-    public Long getId() {
+    public Usuario() {
+    }
+
+    public Usuario(String nombreUsuario, String email, String password, Boolean enabled) {
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -56,13 +90,11 @@ public class Usuario implements Serializable {
         this.enabled = enabled;
     }
 
-    public List<Rol> getRoles() {
+    public Set<Rol> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Rol> roles) {
+    public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
-
-    private static final long serialVersionUID = 1L;
 }
