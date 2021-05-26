@@ -24,16 +24,15 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication){
 
-        Map<String, Object> info = new HashMap<>();
-        info.put("adasd","1111");
-        info.put("fsdfsdf","33333");
-
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+        Map<String, Object> info = new HashMap<>();
+
+        info.put("usuario",usuarioPrincipal);
+
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000L))
-
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
