@@ -49,25 +49,24 @@ public class AuthController {
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUserDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>("Campos mal puestos o email inválido", HttpStatus.BAD_REQUEST);
-        } else {
-            if(userService.existsByEmail(newUserDto.getEmail())){
-                return new ResponseEntity<>("Ya existe este email registrado", HttpStatus.BAD_REQUEST);
-            }
-
-            Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
-
-            Set<Rol> roles = new HashSet<>();
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
-
-            if(newUserDto.getRoles().contains("admin"))
-                roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
-
-            usuario.setRoles(roles);
-
-            userService.save(usuario);
-
-            return new ResponseEntity<>("Usuario guardado correctamente", HttpStatus.CREATED);
         }
+        if(userService.existsByEmail(newUserDto.getEmail())){
+            return new ResponseEntity<>("Ya existe este email registrado", HttpStatus.BAD_REQUEST);
+        }
+
+        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
+
+        Set<Rol> roles = new HashSet<>();
+        roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
+
+        if(newUserDto.getRoles().contains("admin"))
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
+
+        usuario.setRoles(roles);
+
+        userService.save(usuario);
+
+        return new ResponseEntity<>("Usuario guardado correctamente", HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

@@ -6,11 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NewUserDto {
-    @NotBlank
+    @NotBlank(message = "El usuario no puede ser vacío")
     private String nombreUsuario;
-    @Email
+    @NotBlank(message = "El email no puede ser vacío")
+    @Email(message = "El email no es válido")
     private String email;
-    @NotBlank
+    @NotBlank(message = "La contraseña no puede ser vacía")
     private String password;
     private Set<String> roles = new HashSet<>();
 

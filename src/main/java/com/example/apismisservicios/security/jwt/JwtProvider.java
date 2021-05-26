@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtProvider {
@@ -22,10 +24,16 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication){
 
+        Map<String, Object> info = new HashMap<>();
+        info.put("adasd","1111");
+        info.put("fsdfsdf","33333");
+
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
+                .setClaims(info)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000L))
+
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }

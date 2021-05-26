@@ -30,7 +30,7 @@ public class UserService{
         return userRepo.existsByEmail(email);
     }
 
-    public Usuario save(Usuario usuario){
-        return userRepo.save(usuario);
+    public void save(Usuario usuario){
+        userRepo.save(usuario);
     }
 }

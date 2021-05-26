@@ -12,9 +12,8 @@ import java.util.UUID;
 @Table(name = "roles")
 public class Rol implements Serializable {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column(length = 20)
@@ -28,11 +27,11 @@ public class Rol implements Serializable {
         this.rolNombre = rolNombre;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,4 +42,6 @@ public class Rol implements Serializable {
     public void setRolNombre(RolNombre rolNombre) {
         this.rolNombre = rolNombre;
     }
+
+    private static final long serialVersionUID = 1L;
 }
