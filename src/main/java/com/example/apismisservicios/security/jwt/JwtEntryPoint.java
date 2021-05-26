@@ -1,5 +1,6 @@
 package com.example.apismisservicios.security.jwt;
 
+import com.example.apismisservicios.utils.MyResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -18,9 +19,6 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-
-        logger.error("Error en método commence");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autorizado");
-
+        MyResponse.errorsUnauthorized();
     }
 }

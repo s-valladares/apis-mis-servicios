@@ -8,8 +8,7 @@ import com.example.apismisservicios.security.models.entities.Rol;
 import com.example.apismisservicios.security.models.entities.Usuario;
 import com.example.apismisservicios.security.services.RolService;
 import com.example.apismisservicios.security.services.UserService;
-
-import com.example.apismisservicios.utils.ErrorsResponse;
+import com.example.apismisservicios.utils.MyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.crypto.Data;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
@@ -51,11 +48,11 @@ public class AuthController {
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUserDto, BindingResult bindingResult){
 
-        if(ErrorsResponse.controlErrorsFields(bindingResult) != null){
-            return ErrorsResponse.controlErrorsFields(bindingResult);
+        if(MyResponse.errorsFields(bindingResult) != null){
+            return MyResponse.errorsFields(bindingResult);
         }
 
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res;
         Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
         Set<Rol> roles = new HashSet<>();
         try{
@@ -63,12 +60,12 @@ public class AuthController {
 
             if(newUserDto.getRoles().contains(RolNombre.ROLE_ADMIN.toString()))
                 roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
+            usuario.setRoles(roles);
             Usuario newUser = userService.save(usuario);
             newUser.setPassword("");
-            usuario.setRoles(roles);
-            res.put("response", newUser);
+            res = MyResponse.successAction(usuario);
         } catch (DataAccessException ex){
-            return ErrorsResponse.controlErrorsDataBase(ex);
+            return MyResponse.errorsDataBase(ex);
         }
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
@@ -78,10 +75,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto loginUserDto, BindingResult bindingResult){
 
-        if(ErrorsResponse.controlErrorsFields(bindingResult) != null){
-            return ErrorsResponse.controlErrorsFields(bindingResult);
+        if(MyResponse.errorsFields(bindingResult) != null){
+            return MyResponse.errorsFields(bindingResult);
         }
 
+        Map<String, Object> resp;
         JwtDto jwtDto;
 
         try {
@@ -89,11 +87,15 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtProvider.generateToken(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
             jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+            resp = MyResponse.successAction(jwtDto);
         } catch (DataAccessException ex){
-            return ErrorsResponse.controlErrorsDataBase(ex);
+            return MyResponse.errorsDataBase(ex);
+        }catch (Exception exe){
+            return MyResponse.errorsUnauthorized();
         }
 
-        return  new ResponseEntity<>(jwtDto, HttpStatus.OK);
+        return  new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }
