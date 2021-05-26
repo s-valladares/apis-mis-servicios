@@ -27,7 +27,8 @@ public class JwtProvider {
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
-        info.put("usuario",usuarioPrincipal);
+        info.put("usuario",usuarioPrincipal.getNombreUsuario());
+        info.put("email",usuarioPrincipal.getEmail());
 
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)
