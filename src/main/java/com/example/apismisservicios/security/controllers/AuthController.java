@@ -2,7 +2,7 @@ package com.example.apismisservicios.security.controllers;
 import com.example.apismisservicios.security.dtos.JwtDto;
 import com.example.apismisservicios.security.dtos.LoginUserDto;
 import com.example.apismisservicios.security.dtos.NewUserDto;
-import com.example.apismisservicios.security.enums.RolNombre;
+import com.example.apismisservicios.enums.RolNombre;
 import com.example.apismisservicios.security.jwt.JwtProvider;
 import com.example.apismisservicios.security.models.entities.Rol;
 import com.example.apismisservicios.security.models.entities.Usuario;

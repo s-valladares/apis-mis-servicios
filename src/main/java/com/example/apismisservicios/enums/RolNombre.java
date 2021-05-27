@@ -1,4 +1,4 @@
-package com.example.apismisservicios.security.enums;
+package com.example.apismisservicios.enums;
 
 public enum RolNombre {
     ROLE_ADMIN,

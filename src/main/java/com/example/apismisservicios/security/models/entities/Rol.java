@@ -1,12 +1,10 @@
 package com.example.apismisservicios.security.models.entities;
 
-import com.example.apismisservicios.security.enums.RolNombre;
-import org.hibernate.annotations.GenericGenerator;
+import com.example.apismisservicios.enums.RolNombre;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "roles")

@@ -1,6 +1,6 @@
 package com.example.apismisservicios.security.services;
 
-import com.example.apismisservicios.security.enums.RolNombre;
+import com.example.apismisservicios.enums.RolNombre;
 import com.example.apismisservicios.security.models.entities.Rol;
 import com.example.apismisservicios.security.models.repositories.IRolRepo;
 import org.springframework.beans.factory.annotation.Autowired;
