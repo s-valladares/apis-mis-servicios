@@ -29,6 +29,7 @@ public class JwtProvider {
 
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
         info.put("email",usuarioPrincipal.getEmail());
+        info.put("nombre_persona", usuarioPrincipal.getPersona());
 
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)

@@ -1,4 +1,6 @@
 package com.example.apismisservicios.security.controllers;
+import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.security.dtos.JwtDto;
 import com.example.apismisservicios.security.dtos.LoginUserDto;
 import com.example.apismisservicios.security.dtos.NewUserDto;
@@ -9,6 +11,8 @@ import com.example.apismisservicios.security.models.entities.Usuario;
 import com.example.apismisservicios.security.services.RolService;
 import com.example.apismisservicios.security.services.UserService;
 import com.example.apismisservicios.utils.MyResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -35,19 +39,23 @@ public class AuthController {
     final UserService userService;
     final RolService rolService;
     final JwtProvider jwtProvider;
+    final IPersonService personService;
+
+    private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService, RolService rolService, JwtProvider jwtProvider) {
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService, RolService rolService, JwtProvider jwtProvider, IPersonService personService) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.rolService = rolService;
         this.jwtProvider = jwtProvider;
+        this.personService = personService;
     }
 
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUserDto, BindingResult bindingResult){
-
+        logger.error("AQUIIIIIII "+newUserDto.getPersona_id());
         if(MyResponse.errorsFields(bindingResult) != null){
             return MyResponse.errorsFields(bindingResult);
         }
@@ -55,6 +63,9 @@ public class AuthController {
         Map<String, Object> res;
         Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
         Set<Rol> roles = new HashSet<>();
+
+        Persona persona = personService.getId(Long.parseLong(newUserDto.getPersona_id()));
+        usuario.setPersona(persona);
         try{
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
 
