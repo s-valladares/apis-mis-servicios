@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.utils.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,22 +16,22 @@ public class UsuarioPrincipal implements UserDetails{
     private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final Persona persona;
+    private final String persona_id;
 
     public static UsuarioPrincipal build(Usuario usuario){
         List<GrantedAuthority> authorities =
                 usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getRolNombre().name())).collect(Collectors.toList());
 
-        return new UsuarioPrincipal(usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities, usuario.getPersona());
+        return new UsuarioPrincipal(usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities, usuario.getPersona().getId().toString());
     }
 
-    public UsuarioPrincipal(String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities, Persona persona) {
+    public UsuarioPrincipal(String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities, String persona_id) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-        this.persona = persona;
+        this.persona_id = persona_id;
     }
 
     @Override
@@ -76,5 +77,5 @@ public class UsuarioPrincipal implements UserDetails{
         return email;
     }
 
-    public Persona getPersona(){return persona;}
+    public String getPersona(){return persona_id;}
 }
