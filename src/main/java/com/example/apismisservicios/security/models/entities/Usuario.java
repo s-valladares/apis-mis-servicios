@@ -31,8 +31,9 @@ public class Usuario extends AuditModel implements Serializable {
 
     private Boolean enabled;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @NotNull
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "usuarios_roles",
             joinColumns = @JoinColumn(name = "usuario_id"),

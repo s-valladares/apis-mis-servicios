@@ -1,5 +1,6 @@
 package com.example.apismisservicios.security.jwt;
 
+import com.example.apismisservicios.utils.CustomMessage;
 import com.example.apismisservicios.utils.MyResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,11 @@ import java.io.IOException;
 
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
-
     private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        MyResponse.errorsUnauthorized();
+        logger.error("Error: " + e.getMessage());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+        //MyResponse.errorsUnauthorized();
     }
 }

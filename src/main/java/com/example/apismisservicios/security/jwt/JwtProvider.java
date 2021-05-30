@@ -42,8 +42,9 @@ public class JwtProvider {
         info.put("nombre_persona", persona.getNombres());
         info.put("apellido_persona", persona.getApellidos());
 
-        return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
+        return Jwts.builder()
                 .setClaims(info)
+                .setSubject(usuarioPrincipal.getNombreUsuario())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000L))
                 .signWith(SignatureAlgorithm.HS512, secret)

@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +40,10 @@ public class MyResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    public static ResponseEntity<?> errorsUnauthorized() {
+    public static ResponseEntity<?> errorsCredentials() {
         Map<String, Object> response = new HashMap<>();
         List<String> errors = new ArrayList<>();
-        errors.add(CustomMessage.UNAUTHORIZED_MESSAGE);
+        errors.add(CustomMessage.CREDENTIALS_INCORRECT_MESSAGE);
         response.put("success", false);
         response.put("message", CustomMessage.FAIL_MESSAGE);
         response.put("errors", errors);

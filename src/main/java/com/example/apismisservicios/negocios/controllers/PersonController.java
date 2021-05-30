@@ -2,7 +2,9 @@ package com.example.apismisservicios.negocios.controllers;
 
 import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
-import com.example.apismisservicios.utils.Const;
+import com.example.apismisservicios.utils.URLs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(Const.URL_API)
+@RequestMapping("/misservicios/api")
 public class PersonController {
 
-    private final String entidad = "/personas";
+    private final String service = URLs.PERSONAS;
     private final IPersonService personService;
-
+    private final static Logger logger = LoggerFactory.getLogger(PersonController.class);
     @Autowired
     public PersonController(IPersonService personService){
         this.personService = personService;
@@ -30,25 +32,25 @@ public class PersonController {
 
     Map<String, Object> response = new HashMap<>();
 
-    @GetMapping(entidad)
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/personas")
     public ResponseEntity<?> index() {
-        List<Persona> objNew = null;
-
+        List<Persona> objNew;
         try {
             objNew = personService.getAll();
         } catch (DataAccessException ex) {
             response.put("mensaje", "Error al obtener de la base de datos");
             response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("size", objNew.size());
         response.put("rows", objNew);
 
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PostMapping(entidad)
+    @PostMapping(URLs.PERSONAS)
     public ResponseEntity<?> create(@Valid @RequestBody Persona x, BindingResult result) {
 
         Persona objNew = null;

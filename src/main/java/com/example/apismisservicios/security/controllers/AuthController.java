@@ -55,7 +55,7 @@ public class AuthController {
 
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUserDto, BindingResult bindingResult){
-        logger.error("AQUIIIIIII "+newUserDto.getPersona_id());
+
         if(MyResponse.errorsFields(bindingResult) != null){
             return MyResponse.errorsFields(bindingResult);
         }
@@ -104,7 +104,7 @@ public class AuthController {
         } catch (DataAccessException ex){
             return MyResponse.errorsDataBase(ex);
         }catch (Exception exe){
-            return MyResponse.errorsUnauthorized();
+            return MyResponse.errorsCredentials();
         }
 
         return  new ResponseEntity<>(resp, HttpStatus.OK);

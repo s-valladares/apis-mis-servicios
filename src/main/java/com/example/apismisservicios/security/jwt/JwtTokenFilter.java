@@ -37,7 +37,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
 
         }catch (Exception e){
-            logger.error("Error en el método doFilterInternal");
+            logger.error("Error en el método doFilterInternal " + e.getCause());
         }
 
         filterChain.doFilter(request, response);
