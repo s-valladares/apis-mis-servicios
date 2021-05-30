@@ -42,12 +42,11 @@ public class Usuario extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn
-    @NotNull
     private Persona persona;
 
     public Usuario() {
     }
-
+//
     public Usuario(String nombreUsuario, String email, String password, Boolean enabled) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
