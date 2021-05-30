@@ -1,13 +1,13 @@
 package com.example.apismisservicios.negocios.services;
 
-import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.negocios.models.entities.Person;
 
 import java.util.List;
 
 public interface IPersonService {
-    List<Persona> getAll();
-    Persona getId(Long id);
-    Persona create(Persona p);
+    List<Person> getAll();
+    Person getId(Long id);
+    Person create(Person p);
     void delete(Long id);
 
 }

@@ -1,5 +1,5 @@
 package com.example.apismisservicios.security.controllers;
-import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.negocios.models.entities.Person;
 import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.security.dtos.JwtDto;
 import com.example.apismisservicios.security.dtos.LoginUserDto;
@@ -64,8 +64,8 @@ public class AuthController {
         Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
         Set<Rol> roles = new HashSet<>();
 
-        Persona persona = personService.getId(Long.parseLong(newUserDto.getPersona_id()));
-        usuario.setPersona(persona);
+        Person person = personService.getId(Long.parseLong(newUserDto.getPersona_id()));
+        usuario.setPersona(person);
         try{
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
 

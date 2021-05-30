@@ -1,6 +1,6 @@
 package com.example.apismisservicios.negocios.services.implemets;
 
-import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.negocios.models.entities.Person;
 import com.example.apismisservicios.negocios.models.repositories.IPersonRepository;
 import com.example.apismisservicios.negocios.services.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,17 @@ public class PersonaImpl implements IPersonService {
     }
 
     @Override
-    public List<Persona> getAll() {
+    public List<Person> getAll() {
         return personRepository.findAll();
     }
 
     @Override
-    public Persona getId(Long id) {
+    public Person getId(Long id) {
         return personRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Persona create(Persona p) {
+    public Person create(Person p) {
         return personRepository.save(p);
     }
 
