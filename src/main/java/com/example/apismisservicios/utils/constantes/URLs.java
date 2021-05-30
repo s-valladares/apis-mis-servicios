@@ -1,4 +1,4 @@
-package com.example.apismisservicios.utils;
+package com.example.apismisservicios.utils.constantes;
 
 public class URLs {
 

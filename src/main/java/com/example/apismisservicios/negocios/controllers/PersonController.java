@@ -2,7 +2,8 @@ package com.example.apismisservicios.negocios.controllers;
 
 import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
-import com.example.apismisservicios.utils.URLs;
+import com.example.apismisservicios.utils.MyResponse;
+import com.example.apismisservicios.utils.constantes.URLs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/misservicios/api")
+@RequestMapping(URLs.URL_API)
 public class PersonController {
 
     private final String service = URLs.PERSONAS;
@@ -33,21 +34,17 @@ public class PersonController {
     Map<String, Object> response = new HashMap<>();
 
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/personas")
+    @GetMapping(service)
     public ResponseEntity<?> index() {
+        response.clear();
         List<Persona> objNew;
         try {
             objNew = personService.getAll();
         } catch (DataAccessException ex) {
-            response.put("mensaje", "Error al obtener de la base de datos");
-            response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return MyResponse.errorsDataBaseInternal(ex);
         }
-
-        response.put("size", objNew.size());
-        response.put("rows", objNew);
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        response = MyResponse.successActionList(objNew);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(URLs.PERSONAS)
