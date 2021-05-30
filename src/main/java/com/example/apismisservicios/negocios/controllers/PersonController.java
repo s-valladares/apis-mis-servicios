@@ -29,7 +29,7 @@ public class PersonController {
     }
 
     Map<String, Object> response = new HashMap<>();
-
+ 
     @GetMapping(entidad)
     public ResponseEntity<?> index() {
         List<Persona> objNew = null;
