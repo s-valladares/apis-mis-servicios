@@ -35,12 +35,12 @@ public class JwtProvider {
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
-        //Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
+        Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
 
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
         info.put("email",usuarioPrincipal.getEmail());
-        //info.put("nombre_persona", persona.getNombres());
-        //info.put("apellido_persona", persona.getApellidos());
+        info.put("nombre_persona", persona.getNombres());
+        info.put("apellido_persona", persona.getApellidos());
 
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)
