@@ -1,12 +1,16 @@
 package com.example.apismisservicios.security.jwt;
 
+import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.security.models.entities.UsuarioPrincipal;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,14 +25,23 @@ public class JwtProvider {
     private String secret;
     @Value("${jwt.expiration}")
     private int expiration;
+    private final IPersonService personService;
+
+    @Autowired
+    public JwtProvider(IPersonService personService){
+        this.personService = personService;
+    }
 
     public String generateToken(Authentication authentication){
-
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
+        Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
+
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
         info.put("email",usuarioPrincipal.getEmail());
+        info.put("nombre_persona", persona.getNombres());
+        info.put("apellido_persona", persona.getApellidos());
 
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)

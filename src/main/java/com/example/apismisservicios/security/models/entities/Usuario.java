@@ -1,10 +1,10 @@
 package com.example.apismisservicios.security.models.entities;
 
-
-import org.hibernate.annotations.GenericGenerator;
-
+import com.example.apismisservicios.negocios.models.entities.Persona;
+import com.example.apismisservicios.utils.AuditModel;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
+public class Usuario extends AuditModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,12 @@ public class Usuario implements Serializable {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn
+    @NotNull
+    private Persona persona;
 
     public Usuario() {
     }
@@ -95,6 +101,14 @@ public class Usuario implements Serializable {
 
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     private static final long serialVersionUID = 1L;
