@@ -1,12 +1,11 @@
 package com.example.apismisservicios.utils;
 
+import com.example.apismisservicios.utils.constantes.Const;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +21,9 @@ public class MyResponse {
                 return "campo '" + err.getField() + "' " + err.getDefaultMessage();
             }).collect(Collectors.toList());
 
-            response.put("success", false);
-            response.put("message", CustomMessage.FAIL_MESSAGE);
-            response.put("errors", errors);
+            response.put(Const.SUCCESS, false);
+            response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+            response.put(Const.ERROR, errors);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
@@ -36,27 +35,47 @@ public class MyResponse {
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());
         errors.add(ex.getMostSpecificCause().getMessage());
-        response.put("success", false);
-        response.put("message", CustomMessage.FAIL_MESSAGE);
-        response.put("errors", errors);
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    public static ResponseEntity<?> errorsUnauthorized() {
+    public static ResponseEntity<?> errorsDataBaseInternal(DataAccessException ex) {
         Map<String, Object> response = new HashMap<>();
         List<String> errors = new ArrayList<>();
-        errors.add(CustomMessage.UNAUTHORIZED_MESSAGE);
-        response.put("success", false);
-        response.put("message", CustomMessage.FAIL_MESSAGE);
-        response.put("errors", errors);
+        errors.add(ex.getMessage());
+        errors.add(ex.getMostSpecificCause().getMessage());
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, errors);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public static ResponseEntity<?> errorsCredentials() {
+        Map<String, Object> response = new HashMap<>();
+        List<String> errors = new ArrayList<>();
+        errors.add(CustomMessage.CREDENTIALS_INCORRECT_MESSAGE);
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, errors);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     public static Map<String, Object> successAction(Object object){
         Map<String, Object> resp = new HashMap<>();
-        resp.put("success", true);
-        resp.put("message", CustomMessage.SUCCESS_MESSAGE);
-        resp.put("res", object);
+        resp.put(Const.SUCCESS, true);
+        resp.put(Const.MESSAGE, CustomMessage.SUCCESS_MESSAGE);
+        resp.put(Const.DATA, object);
+
+        return resp;
+    }
+
+    public static Map<String, Object> successActionList(List<?> object){
+        Map<String, Object> resp = new HashMap<>();
+        resp.put(Const.SUCCESS, true);
+        resp.put(Const.MESSAGE, CustomMessage.SUCCESS_MESSAGE);
+        resp.put(Const.DATA, object);
 
         return resp;
     }
