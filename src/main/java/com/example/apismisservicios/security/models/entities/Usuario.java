@@ -47,7 +47,7 @@ public class Usuario extends AuditModel implements Serializable {
 
     public Usuario() {
     }
-
+//
     public Usuario(String nombreUsuario, String email, String password, Boolean enabled) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
