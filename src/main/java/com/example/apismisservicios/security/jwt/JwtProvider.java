@@ -1,6 +1,6 @@
 package com.example.apismisservicios.security.jwt;
 
-import com.example.apismisservicios.negocios.models.entities.Person;
+import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.security.models.entities.UsuarioPrincipal;
 import io.jsonwebtoken.*;
@@ -35,12 +35,12 @@ public class JwtProvider {
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
-        Person person = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
+        Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
 
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
         info.put("email",usuarioPrincipal.getEmail());
-        info.put("nombre_persona", person.getNombres());
-        info.put("apellido_persona", person.getApellidos());
+        info.put("nombre_persona", persona.getNombres());
+        info.put("apellido_persona", persona.getApellidos());
 
         return Jwts.builder().setSubject(usuarioPrincipal.getNombreUsuario())
                 .setClaims(info)

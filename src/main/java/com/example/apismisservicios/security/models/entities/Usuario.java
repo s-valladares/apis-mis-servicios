@@ -1,6 +1,6 @@
 package com.example.apismisservicios.security.models.entities;
 
-import com.example.apismisservicios.negocios.models.entities.Person;
+import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.utils.AuditModel;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -43,7 +43,7 @@ public class Usuario extends AuditModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn
     @NotNull
-    private Person person;
+    private Persona persona;
 
     public Usuario() {
     }
@@ -103,12 +103,12 @@ public class Usuario extends AuditModel implements Serializable {
         this.roles = roles;
     }
 
-    public Person getPersona() {
-        return person;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setPersona(Person person) {
-        this.person = person;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     private static final long serialVersionUID = 1L;

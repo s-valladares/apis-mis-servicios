@@ -1,6 +1,6 @@
 package com.example.apismisservicios.negocios.controllers;
 
-import com.example.apismisservicios.negocios.models.entities.Person;
+import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class PersonController {
 
     @GetMapping(entidad)
     public ResponseEntity<?> index() {
-        List<Person> objNew = null;
+        List<Persona> objNew = null;
 
         try {
             objNew = personService.getAll();
@@ -49,9 +49,9 @@ public class PersonController {
     }
 
     @PostMapping(entidad)
-    public ResponseEntity<?> create(@Valid @RequestBody Person x, BindingResult result) {
+    public ResponseEntity<?> create(@Valid @RequestBody Persona x, BindingResult result) {
 
-        Person objNew = null;
+        Persona objNew = null;
 
         if (result.hasErrors()) {
             List<String> errors = result.getFieldErrors().stream().map(err -> {
