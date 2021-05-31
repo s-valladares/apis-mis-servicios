@@ -4,8 +4,6 @@ import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
 import com.example.apismisservicios.utils.MyResponse;
 import com.example.apismisservicios.utils.constantes.URLs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,6 @@ public class PersonController {
 
     private final String service = URLs.PERSONAS;
     private final IPersonService personService;
-    private final static Logger logger = LoggerFactory.getLogger(PersonController.class);
     @Autowired
     public PersonController(IPersonService personService){
         this.personService = personService;
@@ -50,7 +47,7 @@ public class PersonController {
     @PostMapping(URLs.PERSONAS)
     public ResponseEntity<?> create(@Valid @RequestBody Persona x, BindingResult result) {
 
-        Persona objNew = null;
+        Persona objNew;
 
         if (result.hasErrors()) {
             List<String> errors = result.getFieldErrors().stream().map(err -> {
@@ -58,7 +55,7 @@ public class PersonController {
             }).collect(Collectors.toList());
 
             response.put("errors", errors);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -67,12 +64,12 @@ public class PersonController {
         } catch (DataAccessException ex) {
             response.put("mensaje", "Error al insertar en la base de datos");
             response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("mensaje", "OK");
         response.put("RES", objNew);
 
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

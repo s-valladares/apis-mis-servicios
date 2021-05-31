@@ -41,8 +41,6 @@ public class AuthController {
     final JwtProvider jwtProvider;
     final IPersonService personService;
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
-
     @Autowired
     public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService, RolService rolService, JwtProvider jwtProvider, IPersonService personService) {
         this.passwordEncoder = passwordEncoder;
