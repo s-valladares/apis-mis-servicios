@@ -2,7 +2,9 @@ package com.example.apismisservicios.negocios.controllers;
 
 import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.negocios.services.IPersonService;
+import com.example.apismisservicios.utils.CustomMessage;
 import com.example.apismisservicios.utils.MyResponse;
+import com.example.apismisservicios.utils.constantes.Const;
 import com.example.apismisservicios.utils.constantes.URLs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -49,26 +51,22 @@ public class PersonController {
 
         Persona objNew;
 
-        if (result.hasErrors()) {
-            List<String> errors = result.getFieldErrors().stream().map(err -> {
-                return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
-            }).collect(Collectors.toList());
-
-            response.put("errors", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        if(MyResponse.errorsFields(result) != null){
+            return MyResponse.errorsFields(result);
         }
 
         try {
             objNew = personService.create(x);
 
         } catch (DataAccessException ex) {
-            response.put("mensaje", "Error al insertar en la base de datos");
-            response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+            response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+            response.put(Const.ERROR, ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        response.put("mensaje", "OK");
-        response.put("RES", objNew);
+        response.put(Const.MESSAGE, CustomMessage.SUCCESS_MESSAGE);
+        response.put(Const.SUCCESS, true);
+        response.put(Const.DATA, objNew.getId());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

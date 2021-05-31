@@ -26,7 +26,6 @@ public class UserService{
         return userRepo.existsByNombreUsuario(nombreUsuario);
     }
 
-
     public Usuario save(Usuario usuario){
         return userRepo.save(usuario);
     }
