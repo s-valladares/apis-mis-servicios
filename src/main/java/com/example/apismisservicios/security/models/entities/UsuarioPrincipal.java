@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class UsuarioPrincipal implements UserDetails{
     private final String nombreUsuario;
-    private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final String persona_id;
@@ -20,12 +19,11 @@ public class UsuarioPrincipal implements UserDetails{
                 usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getRolNombre().name())).collect(Collectors.toList());
 
-        return new UsuarioPrincipal(usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities, usuario.getPersona().getId().toString());
+        return new UsuarioPrincipal(usuario.getNombreUsuario(), usuario.getPassword(), authorities, usuario.getPersona().getId().toString());
     }
 
-    public UsuarioPrincipal(String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities, String persona_id) {
+    public UsuarioPrincipal(String nombreUsuario, String password, Collection<? extends GrantedAuthority> authorities, String persona_id) {
         this.nombreUsuario = nombreUsuario;
-        this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.persona_id = persona_id;
@@ -68,10 +66,6 @@ public class UsuarioPrincipal implements UserDetails{
 
     public String getNombreUsuario() {
         return nombreUsuario;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getPersona(){return persona_id;}

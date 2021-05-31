@@ -38,7 +38,6 @@ public class JwtProvider {
         Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
 
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
-        info.put("email",usuarioPrincipal.getEmail());
         info.put("nombre_persona", persona.getNombres());
         info.put("apellido_persona", persona.getApellidos());
 

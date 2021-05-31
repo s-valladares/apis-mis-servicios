@@ -23,9 +23,6 @@ public class Usuario extends AuditModel implements Serializable {
     private String nombreUsuario;
 
     @NotNull
-    private String email;
-
-    @NotNull
     @Column(length = 60)
     private String password;
 
@@ -48,9 +45,8 @@ public class Usuario extends AuditModel implements Serializable {
     public Usuario() {
     }
 //
-    public Usuario(String nombreUsuario, String email, String password, Boolean enabled) {
+    public Usuario(String nombreUsuario, String password, Boolean enabled) {
         this.nombreUsuario = nombreUsuario;
-        this.email = email;
         this.password = password;
         this.enabled = enabled;
     }
@@ -69,14 +65,6 @@ public class Usuario extends AuditModel implements Serializable {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

@@ -11,9 +11,6 @@ import java.util.Set;
 public class NewUserDto {
     @NotBlank(message = "El usuario no puede ser vacío")
     private String nombreUsuario;
-    @NotBlank(message = "El email no puede ser vacío")
-    @Email(message = "El email no es válido")
-    private String email;
     @NotBlank(message = "La contraseña no puede ser vacía")
     private String password;
     private Set<String> roles = new HashSet<>();
@@ -26,14 +23,6 @@ public class NewUserDto {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

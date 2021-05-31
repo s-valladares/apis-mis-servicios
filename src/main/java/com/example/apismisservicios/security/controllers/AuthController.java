@@ -61,7 +61,7 @@ public class AuthController {
         }
 
         Map<String, Object> res;
-        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
+        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), passwordEncoder.encode(newUserDto.getPassword()), true);
         Set<Rol> roles = new HashSet<>();
 
         Persona persona = personService.getId(Long.parseLong(newUserDto.getPersona_id()));
