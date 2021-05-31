@@ -9,16 +9,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NewUserDto {
+
     @NotBlank(message = "El usuario no puede ser vacío")
+    @Email(message = "El nombre de usuario debe ser un email")
     private String nombreUsuario;
-    @NotBlank(message = "El email no puede ser vacío")
-    @Email(message = "El email no es válido")
-    private String email;
     @NotBlank(message = "La contraseña no puede ser vacía")
     private String password;
     private Set<String> roles = new HashSet<>();
     @NotBlank(message = "La persona no puede ser vacía")
     private String persona_id;
+    @NotBlank(message = "Debe ingresar el tipo de autenticación")
+    private String auth;
+
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -28,12 +30,12 @@ public class NewUserDto {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAuth() {
+        return auth;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
     public String getPassword() {

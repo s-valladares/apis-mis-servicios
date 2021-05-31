@@ -5,6 +5,7 @@ import com.example.apismisservicios.security.dtos.JwtDto;
 import com.example.apismisservicios.security.dtos.LoginUserDto;
 import com.example.apismisservicios.security.dtos.NewUserDto;
 import com.example.apismisservicios.enums.RolNombre;
+import com.example.apismisservicios.security.dtos.RegisterDto;
 import com.example.apismisservicios.security.jwt.JwtProvider;
 import com.example.apismisservicios.security.models.entities.Rol;
 import com.example.apismisservicios.security.models.entities.Usuario;
@@ -41,8 +42,6 @@ public class AuthController {
     final JwtProvider jwtProvider;
     final IPersonService personService;
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
-
     @Autowired
     public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService, RolService rolService, JwtProvider jwtProvider, IPersonService personService) {
         this.passwordEncoder = passwordEncoder;
@@ -56,15 +55,25 @@ public class AuthController {
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUserDto newUserDto, BindingResult bindingResult){
 
+
+
+        if(userService.existsByNombreUsuario(newUserDto.getNombreUsuario())){
+            String type = userService.getByNombreUsuario(newUserDto.getNombreUsuario()).get().getAuth();
+            return MyResponse.emailRepetido(type);
+        }
+
+
+
         if(MyResponse.errorsFields(bindingResult) != null){
             return MyResponse.errorsFields(bindingResult);
         }
 
         Map<String, Object> res;
-        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true);
+        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), passwordEncoder.encode(newUserDto.getPassword()), true, newUserDto.getAuth());
         Set<Rol> roles = new HashSet<>();
 
         Persona persona = personService.getId(Long.parseLong(newUserDto.getPersona_id()));
+
         usuario.setPersona(persona);
         try{
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
@@ -73,8 +82,8 @@ public class AuthController {
                 roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
             usuario.setRoles(roles);
             Usuario newUser = userService.save(usuario);
-            newUser.setPassword("");
-            res = MyResponse.successAction(usuario);
+            RegisterDto registerDto = new RegisterDto(newUser.getId(), newUser.getNombreUsuario(), persona.getNombres(), persona.getApellidos(), persona.getTelefono(), persona.getDireccion());
+            res = MyResponse.successAction(registerDto);
         } catch (DataAccessException ex){
             return MyResponse.errorsDataBase(ex);
         }

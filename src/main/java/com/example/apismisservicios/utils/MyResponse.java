@@ -30,6 +30,21 @@ public class MyResponse {
         return null;
     }
 
+    public static ResponseEntity<?> emailRepetido(String email) {
+        Map<String, Object> response = new HashMap<>();
+        List<String> errors = new ArrayList<>();
+        errors.add(CustomMessage.EXIST_EMAIL);
+
+        if(email.equals(Const.GOOGLE)){
+            errors.add(Const.GOOGLE);
+        } else errors.add(Const.MANUAL);
+
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, errors);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     public static ResponseEntity<?> errorsDataBase(DataAccessException ex) {
         Map<String, Object> response = new HashMap<>();
         List<String> errors = new ArrayList<>();

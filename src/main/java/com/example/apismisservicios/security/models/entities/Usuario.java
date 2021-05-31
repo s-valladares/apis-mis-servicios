@@ -5,6 +5,7 @@ import com.example.apismisservicios.utils.AuditModel;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,11 +20,12 @@ public class Usuario extends AuditModel implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(length = 20)
+    @Email(message = "El nombre de usuario debe ser un email")
+    @Column(unique = true)
     private String nombreUsuario;
 
-    @NotNull
-    private String email;
+    @Column(length = 10)
+    private String auth;
 
     @NotNull
     @Column(length = 60)
@@ -48,11 +50,11 @@ public class Usuario extends AuditModel implements Serializable {
     public Usuario() {
     }
 //
-    public Usuario(String nombreUsuario, String email, String password, Boolean enabled) {
+    public Usuario(String nombreUsuario, String password, Boolean enabled, String auth) {
         this.nombreUsuario = nombreUsuario;
-        this.email = email;
         this.password = password;
         this.enabled = enabled;
+        this.auth = auth;
     }
 
     public Long getId() {
@@ -69,14 +71,6 @@ public class Usuario extends AuditModel implements Serializable {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -109,6 +103,14 @@ public class Usuario extends AuditModel implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public String getAuth() {
+        return auth;
+    }
+
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
     private static final long serialVersionUID = 1L;

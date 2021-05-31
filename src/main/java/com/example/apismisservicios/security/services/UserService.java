@@ -26,10 +26,6 @@ public class UserService{
         return userRepo.existsByNombreUsuario(nombreUsuario);
     }
 
-    public boolean existsByEmail(String email){
-        return userRepo.existsByEmail(email);
-    }
-
     public Usuario save(Usuario usuario){
         return userRepo.save(usuario);
     }
