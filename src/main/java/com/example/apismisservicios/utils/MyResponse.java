@@ -77,6 +77,15 @@ public class MyResponse {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    public static ResponseEntity<?> errorNull(String id) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, "No existe el id: " + id);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
     public static Map<String, Object> successAction(Object object){
         Map<String, Object> resp = new HashMap<>();
         resp.put(Const.SUCCESS, true);
