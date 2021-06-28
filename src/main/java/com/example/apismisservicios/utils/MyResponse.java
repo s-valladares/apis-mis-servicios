@@ -69,11 +69,19 @@ public class MyResponse {
 
     public static ResponseEntity<?> errorsCredentials() {
         Map<String, Object> response = new HashMap<>();
-        List<String> errors = new ArrayList<>();
-        errors.add(CustomMessage.CREDENTIALS_INCORRECT_MESSAGE);
+        String error = CustomMessage.CREDENTIALS_INCORRECT_MESSAGE;
         response.put(Const.SUCCESS, false);
         response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
-        response.put(Const.ERROR, errors);
+        response.put(Const.ERROR, error);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    public static ResponseEntity<?> errorNull(String id) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put(Const.SUCCESS, false);
+        response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
+        response.put(Const.ERROR, "No existe el id: " + id);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 

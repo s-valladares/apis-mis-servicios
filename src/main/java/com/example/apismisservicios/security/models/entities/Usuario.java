@@ -2,6 +2,7 @@ package com.example.apismisservicios.security.models.entities;
 
 import com.example.apismisservicios.negocios.models.entities.Persona;
 import com.example.apismisservicios.utils.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -45,6 +46,7 @@ public class Usuario extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Persona persona;
 
     public Usuario() {
