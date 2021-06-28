@@ -76,13 +76,13 @@ public class MyResponse {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
-    public static ResponseEntity<?> errorNull(String id) {
+    public static ResponseEntity<?> errorNull(Long id) {
         Map<String, Object> response = new HashMap<>();
 
         response.put(Const.SUCCESS, false);
         response.put(Const.MESSAGE, CustomMessage.FAIL_MESSAGE);
         response.put(Const.ERROR, "No existe el id: " + id);
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     public static Map<String, Object> successAction(Object object){

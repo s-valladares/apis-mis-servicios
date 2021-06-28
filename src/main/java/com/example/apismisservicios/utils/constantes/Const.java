@@ -9,6 +9,6 @@ public class Const {
     public static final String GOOGLE = "google";
     public static final String MANUAL = "manual";
     public static final String FACEBOOK = "facebook";
-
+    public static final String USER_ID = "id";
 
 }

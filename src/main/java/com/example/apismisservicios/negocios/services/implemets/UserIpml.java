@@ -16,7 +16,7 @@ public class UserIpml implements IUserService {
     }
 
     @Override
-    public Usuario getUserId(String id) {
-        return userRepository.findById(Long.parseLong(id)).orElse(null);
+    public Usuario getUserId(Long id) {
+        return userRepository.findById(Long.parseLong(id.toString())).orElse(null);
     }
 }
