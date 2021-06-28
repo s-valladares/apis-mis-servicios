@@ -12,8 +12,6 @@ import com.example.apismisservicios.security.models.entities.Usuario;
 import com.example.apismisservicios.security.services.RolService;
 import com.example.apismisservicios.security.services.UserService;
 import com.example.apismisservicios.utils.MyResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
