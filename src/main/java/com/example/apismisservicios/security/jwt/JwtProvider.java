@@ -24,23 +24,24 @@ public class JwtProvider {
     private String secret;
     @Value("${jwt.expiration}")
     private int expiration;
+    /*
     private final IPersonService personService;
-
-    @Autowired
+   @Autowired
     public JwtProvider(IPersonService personService){
         this.personService = personService;
     }
-
+*/
     public String generateToken(Authentication authentication){
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
+        /*
         Persona persona = personService.getId(Long.parseLong(usuarioPrincipal.getPersona()));
 
         info.put("usuario",usuarioPrincipal.getNombreUsuario());
         info.put("nombre_persona", persona.getNombres());
         info.put("apellido_persona", persona.getApellidos());
-
+        */
         return Jwts.builder()
                 .setClaims(info)
                 .setSubject(usuarioPrincipal.getNombreUsuario())
