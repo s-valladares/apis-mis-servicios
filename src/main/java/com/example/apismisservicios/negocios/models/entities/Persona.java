@@ -16,18 +16,18 @@ public class Persona extends AuditModel implements Serializable {
     @NotNull(message = "No puede ser nulo")
     @NotEmpty(message = "No puede ser vacío")
     @Column(length = 50)
-    private String nombres;
+    private String firstName;
 
     @NotNull(message = "No puede ser nulo")
     @NotEmpty(message = "No puede ser vacío")
     @Column(length = 50)
-    private String apellidos;
+    private String lastName;
 
     @Column(length = 100)
-    private String direccion;
+    private String address;
 
     @Column(length = 8)
-    private String telefono;
+    private String phone;
 
     public Long getId() {
         return id;
@@ -37,36 +37,36 @@ public class Persona extends AuditModel implements Serializable {
         this.id = id;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setFirstName(String nombres) {
+        this.firstName = nombres;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setLastName(String apellidos) {
+        this.lastName = apellidos;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setAddress(String direccion) {
+        this.address = direccion;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String telefono) {
+        this.phone = telefono;
     }
 
     private static final long serialVersionUID = 1L;

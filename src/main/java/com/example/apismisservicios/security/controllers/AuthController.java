@@ -80,7 +80,7 @@ public class AuthController {
                 roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
             usuario.setRoles(roles);
             Usuario newUser = userService.save(usuario);
-            RegisterDto registerDto = new RegisterDto(newUser.getId(), newUser.getNombreUsuario(), persona.getNombres(), persona.getApellidos(), persona.getTelefono(), persona.getDireccion());
+            RegisterDto registerDto = new RegisterDto(newUser.getId(), newUser.getNombreUsuario(), persona.getFirstName(), persona.getLastName(), persona.getPhone(), persona.getAddress());
             res = MyResponse.successAction(registerDto);
         } catch (DataAccessException ex){
             return MyResponse.errorsDataBase(ex);

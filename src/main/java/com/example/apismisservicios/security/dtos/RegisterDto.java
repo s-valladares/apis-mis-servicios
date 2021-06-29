@@ -2,20 +2,20 @@ package com.example.apismisservicios.security.dtos;
 
 public class RegisterDto {
     private Long id;
-    private String nombreUsuario;
-    private String nombres;
-    private String apellidos;
-    private String telefono;
-    private String direccion;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String address;
 
 
-    public RegisterDto(Long id, String nombreUsuario, String nombres, String apellidos, String telefono, String direccion) {
+    public RegisterDto(Long id, String email, String firstName, String lastName, String phone, String address) {
         this.id = id;
-        this.nombreUsuario = nombreUsuario;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.telefono = telefono;
-        this.direccion = direccion;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
     }
 
     public Long getId() {
@@ -26,43 +26,43 @@ public class RegisterDto {
         this.id = id;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

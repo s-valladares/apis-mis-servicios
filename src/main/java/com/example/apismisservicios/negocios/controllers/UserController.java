@@ -3,7 +3,6 @@ package com.example.apismisservicios.negocios.controllers;
 import com.example.apismisservicios.negocios.dtos.ProfileDto;
 import com.example.apismisservicios.negocios.services.IUserService;
 import com.example.apismisservicios.security.jwt.JwtProvider;
-import com.example.apismisservicios.security.jwt.JwtTokenFilter;
 import com.example.apismisservicios.security.models.entities.Usuario;
 import com.example.apismisservicios.security.services.UserService;
 import com.example.apismisservicios.utils.MyResponse;
@@ -51,7 +50,7 @@ public class UserController {
             if(user == null){
                 return MyResponse.errorNull(id);
             } else {
-                profileDto = new ProfileDto(user.getNombreUsuario(), user.getPersona().getNombres(), user.getPersona().getApellidos(), user.getPersona().getTelefono(), user.getPersona().getDireccion(), user.getCreatedAt());
+                profileDto = new ProfileDto(user.getNombreUsuario(), user.getPersona().getFirstName(), user.getPersona().getLastName(), user.getPersona().getPhone(), user.getPersona().getAddress(), user.getCreatedAt());
                 profileDto.setId(id);
                 resp = MyResponse.successAction(profileDto);
             }

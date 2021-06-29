@@ -17,6 +17,7 @@ public class NewUserDto {
     private String persona_id;
     @NotBlank(message = "Debe ingresar el tipo de autenticación")
     private String auth;
+    private Boolean enabled;
 
 
     public String getEmail() {
@@ -53,6 +54,14 @@ public class NewUserDto {
 
     public String getPersona_id() {
         return persona_id;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setPersona_id(String persona_id) {
