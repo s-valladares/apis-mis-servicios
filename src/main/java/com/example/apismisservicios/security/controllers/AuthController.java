@@ -55,8 +55,8 @@ public class AuthController {
 
 
 
-        if(userService.existsByNombreUsuario(newUserDto.getNombreUsuario())){
-            String type = userService.getByNombreUsuario(newUserDto.getNombreUsuario()).get().getAuth();
+        if(userService.existsByNombreUsuario(newUserDto.getEmail())){
+            String type = userService.getByNombreUsuario(newUserDto.getEmail()).get().getAuth();
             return MyResponse.emailRepetido(type);
         }
 
@@ -67,7 +67,7 @@ public class AuthController {
         }
 
         Map<String, Object> res;
-        Usuario usuario = new Usuario(newUserDto.getNombreUsuario(), passwordEncoder.encode(newUserDto.getPassword()), true, newUserDto.getAuth());
+        Usuario usuario = new Usuario(newUserDto.getEmail(), passwordEncoder.encode(newUserDto.getPassword()), true, newUserDto.getAuth());
         Set<Rol> roles = new HashSet<>();
 
         Persona persona = personService.getId(Long.parseLong(newUserDto.getPersona_id()));

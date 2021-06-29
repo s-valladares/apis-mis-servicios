@@ -1,10 +1,7 @@
 package com.example.apismisservicios.security.dtos;
 
-import com.example.apismisservicios.utils.AuditModel;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +9,7 @@ public class NewUserDto {
 
     @NotBlank(message = "El usuario no puede ser vacío")
     @Email(message = "El nombre de usuario debe ser un email")
-    private String nombreUsuario;
+    private String email;
     @NotBlank(message = "La contraseña no puede ser vacía")
     private String password;
     private Set<String> roles = new HashSet<>();
@@ -22,12 +19,12 @@ public class NewUserDto {
     private String auth;
 
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAuth() {
