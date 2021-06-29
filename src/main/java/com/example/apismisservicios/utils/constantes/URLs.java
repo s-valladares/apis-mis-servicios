@@ -8,4 +8,5 @@ public class URLs {
     //URL DE SERVICIOS
     public static final String PERSONAS = "/personas";
     public static final String USERS = "/users";
+    public static final String PROFILE = "/users/me";
 }

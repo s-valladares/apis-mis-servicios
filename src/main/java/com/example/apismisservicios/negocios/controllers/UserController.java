@@ -22,9 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/misservicios/api")
+@RequestMapping(URLs.URL_API)
 public class UserController {
-    private final String service = URLs.USERS;
     final UserService userService;
     final IUserService iUserService;
     final JwtProvider jwtProvider;
@@ -38,7 +37,7 @@ public class UserController {
         this.jwtProvider = jwtProvider;
     }
 
-    @GetMapping("users/me")
+    @GetMapping(URLs.PROFILE)
     public ResponseEntity<?> profile( @RequestHeader(name="Authorization") String token){
         Map<String, Object> resp;
         Usuario user;
