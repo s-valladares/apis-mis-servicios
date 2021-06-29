@@ -7,13 +7,12 @@ import java.util.Collection;
 public class JwtDto {
     private String token;
     private String bearer = "Bearer";
-    private String nombreUsuario;
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtDto(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
+    public JwtDto(String token, String email, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
-        this.nombreUsuario = nombreUsuario;
+        this.email = email;
 
         this.authorities = authorities;
     }
@@ -34,12 +33,12 @@ public class JwtDto {
         this.bearer = bearer;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
