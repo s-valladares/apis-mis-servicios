@@ -1,17 +1,11 @@
 package com.example.apismisservicios.security.jwt;
 
-import com.example.apismisservicios.negocios.models.entities.Persona;
-import com.example.apismisservicios.negocios.services.IPersonService;
-import com.example.apismisservicios.security.models.entities.UsuarioPrincipal;
-import com.example.apismisservicios.security.services.UserService;
-import com.example.apismisservicios.utils.constantes.Const;
+import com.example.apismisservicios.security.models.entities.UserPrincipal;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -29,12 +23,12 @@ public class JwtProvider {
     private int expiration;
 
     public String generateToken(Authentication authentication){
-        UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Map<String, Object> info = new HashMap<>();
 
         return Jwts.builder()
                 .setClaims(info)
-                .setSubject(usuarioPrincipal.getNombreUsuario())
+                .setSubject(userPrincipal.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000L))
                 .signWith(SignatureAlgorithm.HS512, secret)

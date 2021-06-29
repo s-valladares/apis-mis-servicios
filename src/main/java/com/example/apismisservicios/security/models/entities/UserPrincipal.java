@@ -8,22 +8,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UsuarioPrincipal implements UserDetails{
-    private final String nombreUsuario;
+public class UserPrincipal implements UserDetails{
+    private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final String persona_id;
 
-    public static UsuarioPrincipal build(Usuario usuario){
+    public static UserPrincipal build(Usuario usuario){
         List<GrantedAuthority> authorities =
                 usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getRolNombre().name())).collect(Collectors.toList());
 
-        return new UsuarioPrincipal(usuario.getNombreUsuario(), usuario.getPassword(), authorities, usuario.getPersona().getId().toString());
+        return new UserPrincipal(usuario.getNombreUsuario(), usuario.getPassword(), authorities, usuario.getPersona().getId().toString());
     }
 
-    public UsuarioPrincipal(String nombreUsuario, String password, Collection<? extends GrantedAuthority> authorities, String persona_id) {
-        this.nombreUsuario = nombreUsuario;
+    public UserPrincipal(String email, String password, Collection<? extends GrantedAuthority> authorities, String persona_id) {
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.persona_id = persona_id;
@@ -41,7 +41,7 @@ public class UsuarioPrincipal implements UserDetails{
 
     @Override
     public String getUsername() {
-        return nombreUsuario;
+        return email;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class UsuarioPrincipal implements UserDetails{
         return true;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getEmail() {
+        return email;
     }
 
     public String getPersona(){return persona_id;}
